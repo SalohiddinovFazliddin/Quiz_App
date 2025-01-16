@@ -3,13 +3,18 @@
 namespace App\Models;
 
 use App\Traits\HasApiTokens;
+use Random\RandomException;
 
 class  User extends DB
 {
     use HasApiTokens;
+
+    /**
+     * @throws RandomException
+     */
     public  function create(string $full_name, string $email, string $password)
     {
-        $query = "INSERT INTO users (full_name, email, password,updated_at, created_at) VALUES (:full_name, :email, :password, NOW(), NOW())";
+        $query = "INSERT INTO users (full_name, email, password,update_at, created_at) VALUES (:full_name, :email, :password, NOW(), NOW())";
         $this->conn
             ->prepare($query)
             ->execute(
@@ -49,7 +54,7 @@ class  User extends DB
     }
     public function getUserById(int $id): mixed
     {
-        $query = "SELECT id, full_name, email, updated_at, created_at FROM users WHERE id = :id";
+        $query = "SELECT id, full_name, email, update_at, created_at FROM users WHERE id = :id";
         $stmt = $this->conn
             ->prepare($query);
         $stmt->execute(

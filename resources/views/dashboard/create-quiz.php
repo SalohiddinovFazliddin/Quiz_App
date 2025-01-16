@@ -1,10 +1,13 @@
-<?php require '../resources/views/componets/header.php'; ?>
-<script src=" js/dashboard/getUserInfo.js"></script>
+<?php require '../resources/views/components/header.php'; ?>
+<script src=" /js/dashboard/getUserInfo.js"></script>
+<script src=" /js/dashboard/add-quiz.js"></script>
+
+
 
 <body class="bg-gray-100">
 <div class="flex min-h-screen">
     <!-- Sidebar -->
-    <?php require '../resources/views/componets/sidebar.php'; ?>
+    <?php require '../resources/views/components/sidebar.php'; ?>
 
     <!-- Main Content -->
     <div class="flex-1">
@@ -35,7 +38,7 @@
                     </div>
 
                     <!-- Main Form -->
-                    <form class="space-y-4" id="quizForm">
+                    <form class="space-y-4" id="quizForm" onsubmit="createQuiz()">
                         <!-- Quiz Details Section -->
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-semibold text-gray-800 mb-4">Quiz Details</h3>
@@ -109,6 +112,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="error"></div>
                         </div>
 
                         <!-- Submit Button -->
@@ -124,4 +128,26 @@
         </main>
     </div>
 </div>
-<?php require '../resources/views/componets/footer.php'; ?>
+    <script>
+        async function createQuiz() {
+            event.preventDefault();
+            let form = document.getElementById("quizForm"),
+                formData = new FormData(form);
+            const { default: apiFetch } = await import('/js/utils/apiFetch.js');
+            await apiFetch('/quizzes', {
+                method: "Post",
+                body: formData
+            }).then(data =>{
+                console.log(data);
+            })
+                .catch((error)=>{
+                    document.getElementById('error').innerHTML = "";
+                    Object.keys(error.data.errors).forEach(err => {
+                        document.getElementById('error').innerHTML += `
+                <p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
+
+                    })
+                });
+        }
+    </script>
+<?php require '../resources/views/components/footer.php'; ?>

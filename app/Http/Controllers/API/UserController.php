@@ -24,7 +24,7 @@ class UserController
         $user->create($userData['full_name'],$userData['email'],$userData['password']);
         apiResponse(
             ['massage' => 'User created successfully',
-            'token'=>$user->api_token],
+                'token'=>$user->api_token],
             200);
     }
 

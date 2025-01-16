@@ -1,4 +1,4 @@
-<?php require '../resources/views/componets/header.php'; ?>
+<?php require '../resources/views/components/header.php'; ?>
 
 <body class="bg-gray-50">
 <div>
@@ -55,7 +55,7 @@
         event.preventDefault();
         let form = document.getElementById("login-form"),
             formData = new FormData(form);
-        const { default: apiFetch } = await import('./js/utils/allFetch.js');
+        const { default: apiFetch } = await import('./js/utils/apiFetch.js');
         await apiFetch('/login', {
             method: "Post",
             body: formData
@@ -75,5 +75,5 @@
     }
 
 </script>
-    <?php require '../resources/views/componets/footer.php'; ?>
+    <?php require '../resources/views/components/footer.php'; ?>
 

@@ -1,7 +1,7 @@
 
 async function user() {
 
-    const { default: apiFetch } = await  import('../../js/utils/allFetch.js');
+    const { default: apiFetch } = await  import('../utils/apiFetch.js');
     await apiFetch('/users/getInfo', {
     method: "Get"
 }).then(user =>{
