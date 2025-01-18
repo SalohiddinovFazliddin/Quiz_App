@@ -14,6 +14,8 @@ Router::get('/dashboard', [UserController::class, 'home']);
 Router::get('/create_quiz', [UserController::class, 'create_quiz']);
 Router::get('/quizzes', [UserController::class, 'quizzes']);
 Router::get('/statistic', [UserController::class, 'statistic']);
+Router::get('/take_quiz', [UserController::class, 'take_quiz']);
+Router::get('/dashboard/quizzes/{id}/update-quiz', [UserController::class, 'update-quiz']);
 
 
 Router::notFound();

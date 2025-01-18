@@ -21,4 +21,13 @@ class UserController
         view('dashboard/statistic');
     }
 
+    public function take_quiz():void
+    {
+        view('quiz/take_quiz');
+    }
+    public function update($id){
+        view('dashboard/update-quiz', ['id' => $id]);
+    }
+
+
 }

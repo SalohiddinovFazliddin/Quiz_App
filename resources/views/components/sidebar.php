@@ -26,7 +26,7 @@
     let sideBarItem = [
         {
             'name': 'Dashboard',
-            'uri': '/dashboard'
+            'uri': '/dashboard',
             'icon': 'fas fa-home mr-2'
         },
         {

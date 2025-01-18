@@ -1,9 +1,6 @@
 <?php require '../resources/views/components/header.php'; ?>
 <script src=" /js/dashboard/getUserInfo.js"></script>
 <script src=" /js/dashboard/add-quiz.js"></script>
-
-
-
 <body class="bg-gray-100">
 <div class="flex min-h-screen">
     <!-- Sidebar -->
@@ -134,17 +131,14 @@
             let form = document.getElementById("quizForm"),
                 formData = new FormData(form);
             const { default: apiFetch } = await import('/js/utils/apiFetch.js');
-            await apiFetch('/quizzes', {
-                method: "Post",
-                body: formData
-            }).then(data =>{
+            await apiFetch(`/quizzes/${<?php echo $id; ?>}`, {method:'PUT',body:formData})
+                .then(data =>{
                 window.location.href = '/dashboard/quizzes';
             })
                 .catch((error)=>{
                     document.getElementById('error').innerHTML = "";
                     Object.keys(error.data.errors).forEach(err => {
-                        document.getElementById('error').innerHTML += `
-                <p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
+                        document.getElementById('error').innerHTML = `<p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
 
                     })
                 });
