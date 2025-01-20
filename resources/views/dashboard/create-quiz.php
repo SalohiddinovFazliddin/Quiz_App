@@ -135,10 +135,10 @@
                 formData = new FormData(form);
             const { default: apiFetch } = await import('/js/utils/apiFetch.js');
             await apiFetch('/quizzes', {
-                method: "Post",
+                method: "POST",
                 body: formData
             }).then(data =>{
-                window.location.href = '/dashboard/quizzes';
+                window.location.href = '/quizzes';
             })
                 .catch((error)=>{
                     document.getElementById('error').innerHTML = "";

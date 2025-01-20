@@ -30,7 +30,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">My Quizzes</h2>
                 <div class="flex space-x-4">
-                    <a href="/dashboard/create-quiz" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                    <a href="/create_quiz" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
                         Create New Quiz
                     </a>
                     <div class="flex border rounded-lg">
@@ -76,9 +76,9 @@
 </div>
     <script>
         async function quizzes() {
-            const { default: apiFetch} = await import('/js/utils/apiFetch.js');,
+            const { default: apiFetch} = await import('/js/utils/apiFetch.js'),
                 quizList = document.getElementById('quizList');
-            await apiFetch('quizzes',{method: 'POST'})
+            await apiFetch('/quizzes',{method: 'GET'})
             .then(data => {
                 console.log(data.quizzes);
                 data.quizzes.forEach(quiz => {
@@ -125,12 +125,13 @@
         async function deleteQuiz($id) {
             if (confirm('Are you sure you want to')) {
                 const {default: apiFetch} = await import('/js/utils/apiFetch.js');
-                apiFetch(`quizzes/${$id}`, {method: 'DELETE'})
+                apiFetch(`/quizzes/${$id}`, {method: 'DELETE'})
                     .then((data) => {
-                        .catch((error) => {
-                            alert("Internetga qarasang bo'lmaydi? :)");
-                        });
+
                     })
+                    .catch((error) => {
+                        alert("Internetga qarasang bo'lmaydi? :)");
+                    });
             }
         }
 
