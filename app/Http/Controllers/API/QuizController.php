@@ -16,7 +16,7 @@ class QuizController
 
     public function index() {
         $quizzes = (new Quiz())->getByUserId(Auth::user()->id);
-        apiResponse(['$quizzes' => $quizzes]);
+        apiResponse(['quizzes' => $quizzes]);
     }
 
 

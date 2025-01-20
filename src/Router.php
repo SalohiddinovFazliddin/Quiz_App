@@ -91,7 +91,7 @@ class Router
 
     public static function delete(string $route, callable|array $callback, ?string $middleware=null): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_method']) && $_POST['_method'] === 'DELETE') {
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE' || isset($_POST['_method']) || $_POST['_method'] === 'DELETE') {
             self::runCallback($route, $callback, $middleware);
         }
     }

@@ -111,7 +111,7 @@
                     <div class="flex justify-between">
                         <a href="/quizzes/${quiz.id}/update" class="text-indigo-600 hover:text-indigo-800">Edit</a>
                         <button class="text-green-600 hover:text-green-800">View Results</button>
-                        <button class="text-red-600 hover:text-red-800">Delete</button>
+                        <button class="text-red-600 hover:text-red-800" onclick="deleteQuiz(${quiz.id})" >Delete</button>
                     </div>
                 </div>
                     `
