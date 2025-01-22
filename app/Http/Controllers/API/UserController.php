@@ -28,7 +28,7 @@ class UserController
             200);
     }
 
-    public function  log_in(): void
+    public function  login(): void
     {
         $userData = $this-> validate([
             'email' => 'string',

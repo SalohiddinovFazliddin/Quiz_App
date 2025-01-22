@@ -41,39 +41,47 @@
                     </div>
                 </div>
 
-            <div>
-                <button type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Sign in
-                </button>
-            </div>
-        </form>
+                <div>
+                    <button type="submit"
+                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<script>
-    async function login() {
-        event.preventDefault();
-        let form = document.getElementById("login-form"),
-            formData = new FormData(form);
-        const { default: apiFetch } = await import('./js/utils/apiFetch.js');
-        await apiFetch('/login', {
-            method: "Post",
-            body: formData
-        }).then(data =>{
-            localStorage.setItem('token', data.token);
-            window.location.href='/dashboard';
-        })
-            .catch((error)=>{
-            console.error(error.data.errors);
+    <script>
+        async function login(event) {
+            event.preventDefault();
+            let form = document.getElementById("login-form"),
+                formData = new FormData(form);
+
+            try {
+                const { default: apiFetch } = await import('/js/utils/apiFetch.js');
+                let response = await apiFetch('/login', {
+                    method: "POST",
+                    body: formData
+                });
+
+                localStorage.setItem('token', response.token);
+                window.location.href = '/dashboard';
+            } catch (error) {
+                console.error("Error:", error);
+
+                // Agar error.data mavjud bo'lmasa, xatoni oddiy matn ko'rinishida ko'rsatamiz
                 document.getElementById('error').innerHTML = "";
-                Object.keys(error.data.errors).forEach(err => {
-                document.getElementById('error').innerHTML += `
-                <p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
 
-            })
-        });
-    }
+                if (error?.data?.errors) {
+                    Object.keys(error.data.errors).forEach(err => {
+                        document.getElementById('error').innerHTML += `
+                        <p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
+                    });
+                } else {
+                    document.getElementById('error').innerHTML = `
+                    <p class="text-red-500 mt-1">Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.</p>`;
+                }
+            }
+        }
+    </script>
 
-</script>
     <?php require '../resources/views/components/footer.php'; ?>
-

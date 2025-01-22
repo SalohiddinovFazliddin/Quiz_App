@@ -12,7 +12,7 @@
                     </a>
                 </p>
             </div>
-            <form id="form" class="mt-8 space-y-6" method="POST" onsubmit="register()">
+            <form id="register-form" class="mt-8 space-y-6" method="POST" onsubmit="register()">
                 <div class="rounded-md shadow-sm -space-y-px">
                     <div>
                         <label for="name" class="sr-only">Full name</label>
@@ -47,7 +47,7 @@
                         <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms and Conditions</a>
                     </label>
                 </div>
-                <div id="error"></div>
+                <div id="errors"></div>
 
                 <div>
                     <button type="submit"
@@ -61,9 +61,9 @@
     <script>
         async function register() {
             event.preventDefault();
-            let form = document.getElementById("form"),
+            let form = document.getElementById("register-form"),
                 formData = new FormData(form);
-            const { default: apiFetch } = await import('/js/utils/apiFetch.js');
+            const { default: apiFetch } = await import('./js/utils/apiFetch.js');
             await apiFetch('/register', {
                 method: "Post",
                 body: formData
@@ -72,6 +72,7 @@
                 window.location.href='/dashboard';
             })
                 .catch((error)=>{
+                    console.error(error.data.errors);
                     document.getElementById('error').innerHTML = "";
                     Object.keys(error.data.errors).forEach(err => {
                         document.getElementById('error').innerHTML += `

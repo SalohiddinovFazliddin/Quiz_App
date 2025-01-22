@@ -19,6 +19,13 @@ class QuizController
         apiResponse(['quizzes' => $quizzes]);
     }
 
+    public function show (int $quizId) {
+        $quiz = (new Quiz())->find($quizId);
+        $questions = (new Question())->getWithOptions($quizId);
+        $quiz->questions = $questions;
+        apiResponse(['quiz']);
+    }
+
 
 
     public function store(): void
