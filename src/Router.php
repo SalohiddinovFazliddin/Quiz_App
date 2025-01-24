@@ -67,7 +67,7 @@ class Router
     public static function get(string $route, callable|array $callback, ?string $middleware=null): void
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-//            self::middleware($middleware);
+            self::middleware($middleware);
             self::runCallback($route, $callback);
         }
     }
@@ -82,16 +82,17 @@ class Router
 
     public static function put(string $route, callable|array $callback, ?string $middleware=null): void
     {
-        if (($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_method']) && $_POST['_method'] === 'PUT')
-            || $_SERVER['REQUEST_METHOD'] === 'PUT') {
-            self::runCallback($route, $callback, $middleware);
-        }
+       if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT') {
+           if ((isset($_POST['_method']) && $_POST['_method'] == 'PUT' || $_SERVER['REQUEST_METHOD'] == 'PUT')) {
+               self::runCallback($route, $callback,$middleware);
+           }
+       }
 
     }
 
     public static function delete(string $route, callable|array $callback, ?string $middleware=null): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'DELETE' || isset($_POST['_method']) || $_POST['_method'] === 'DELETE') {
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE' || isset($_POST['_method'])) {
             self::runCallback($route, $callback, $middleware);
         }
     }
@@ -101,12 +102,12 @@ class Router
         return mb_stripos(self::getRoute(), '/api') === 0;
     }
 
-    public static function notFound(string $route = 'api'): bool
+    public static function notFound(string $route = 'api')
     {
         if (self::isApiCall()) {
             apiResponse(['error' => 'Not Found'], 404);
         }
-        view('404');
+        view('errors/404');
     }
     public static function middleware(?string $middleware=null):void
     {

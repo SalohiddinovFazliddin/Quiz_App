@@ -1,9 +1,9 @@
-<?php components('dashboard/header'); ?>
+<?php require '../resources/views/components/header.php'; ?>
     <script src="/js/dashboard/getUserInfo.js"></script>
     <div class="bg-gray-100">
         <div class="flex min-h-screen">
             <!-- Sidebar -->
-            <?php components('dashboard/sidebar'); ?>
+            <?php require '../resources/views/components/sidebar.php'; ?>
 
             <!-- Main Content -->
             <div class="flex-1">
@@ -18,7 +18,7 @@
 
                             <div class="flex items-center space-x-2">
                                 <img src="https://via.placeholder.com/40" alt="Profile" class="w-10 h-10 rounded-full">
-                                <span class="text-gray-700 font-medium" id="userName">John Doe</span>
+                                <span class="text-gray-700 font-medium" id="username"></span>
                             </div>
                         </div>
                     </div>
@@ -382,4 +382,4 @@
                 });
         }
     </script>
-<?php components('dashboard/footer'); ?>
+<?php require '../resources/views/components/footer.php'; ?>
