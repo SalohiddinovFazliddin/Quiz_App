@@ -44,32 +44,36 @@ class QuizController
 
 
     public function store(): void
+
     {
-        $quizItems=$this->validate([
+        $quizItems = $this->validate([
             'title' => 'string',
             'description' => 'string',
             'timeLimit' => 'int',
-            'questions' => 'array'
+            'questions' => 'array',
         ]);
-        $quiz = new Quiz();
-        $question =new Question();
-        $options = new Option();
 
-        $quiz_id=$quiz->create(Auth::user()->id,
+
+        $quiz = new Quiz();
+        $question = new Question();
+        $option = new Option();
+
+        $quiz_id = $quiz->create(   Auth::user()->id,
             $quizItems['title'],
             $quizItems['description'],
-            $quizItems['timeLimit']
+            $quizItems['timeLimit'],
         );
         $questions=$quizItems['questions'];
-
-        foreach ($questions as $questionItem){
-            $question_id=$question->create($quiz_id, $questionItem['quiz']);
-            $correct=$questionItem['correct'];
-            foreach ($questionItem['options'] as $key=>$optionItem){
-                $options->create($question_id, $optionItem, $correct==$key);
+        foreach ($questions as $questionItem) {
+            $question_id = $question->create($quiz_id, $questionItem['quiz']);
+            $correct = $questionItem['correct'];
+            foreach ($questionItem['options'] as $key => $optionItem) {
+                $option->create($question_id, $optionItem, $correct == $key);
             }
         }
-        apiResponse(['message' =>'Quiz created successfully',],201);
+        apiResponse([
+            'massage' => 'successfully created'
+        ]);
 
 
     }

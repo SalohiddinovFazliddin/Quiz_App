@@ -8,15 +8,17 @@ class Quiz extends DB
 {
     public  function create(int $userId, string $title, string $description, int $timeLimit): bool
     {
-        $query = "INSERT INTO quizzes (user_id, title, description, time_limit ,updated_at, created_at) 
-                                VALUES (:userId, :title, :description, :timeLimit, NOW(), NOW())";
+        $query = "INSERT INTO quizzes (unique_value,user_id, title, description, time_limit ,updated_at, created_at) 
+                                VALUES (:uniqueValue,:userId, :title, :description, :timeLimit, NOW(), NOW())";
         $stmt = $this->conn->prepare($query);
-        return $stmt->execute([
+        $stmt->execute([
+                ':uniqueValue' => $uniqid(),
                 ':userId' => $userId,
                 ':title' => $title,
                 ':description' => $description,
                 ':timeLimit' => $timeLimit,
             ]);
+        return $this->conn->lastInsertId();
 
     }
     public function find(int $quizId){
