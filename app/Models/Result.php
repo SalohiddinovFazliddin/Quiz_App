@@ -26,4 +26,12 @@ class Result extends DB
         return $this->find($resultId);
     }
 
+    public function getUserResult(int $userId, int $quizId)
+    {
+        $query = "SELECT * FROM results WHERE user_id = :userId AND quiz_id = :quizId";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute(['userId' => $userId, 'quizId' => $quizId]);
+        return $stmt->fetch();
+    }
+
 }
