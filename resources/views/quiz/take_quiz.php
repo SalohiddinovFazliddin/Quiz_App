@@ -123,8 +123,8 @@
             </div>
             <div id="results-card" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 hidden">
                 <div class="text-center">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Quiz Complete!</h2>
-                    <h3 class="text-xl text-gray-700 mb-6">JavaScript Fundamentals Quiz</h3>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4" id="result-title">Quiz Complete!</h2>
+                    <h3 class="text-xl text-gray-700 mb-6" id="result-description">JavaScript Fundamentals Quiz</h3>
 
                     <div class="flex justify-center space-x-12 mb-8">
                         <div class="text-center">
@@ -237,6 +237,8 @@
                               console.log(error);
                               console.log(error.data);
                               document.getElementById('result-time-taken').innerHTML = error.data.data.result.time_taken + ":00";
+                              document.getElementById('result-title').innerHTML = error.data.data.result.quiz.title;
+                              document.getElementById('result-description').innerHTML = error.data.data.result.quiz.description;
                               document.getElementById('results-card').classList.remove('hidden');
                               document.getElementById('questionContainer').classList.add('hidden');
 
