@@ -12,7 +12,7 @@ class Quiz extends DB
                                 VALUES (:uniqueValue,:userId, :title, :description, :timeLimit, NOW(), NOW())";
         $stmt = $this->conn->prepare($query);
         $stmt->execute([
-                ':uniqueValue' => $uniqid(),
+                ':uniqueValue' => uniqid(),
                 ':userId' => $userId,
                 ':title' => $title,
                 ':description' => $description,
