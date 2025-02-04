@@ -8,6 +8,11 @@ function view($page, $data = []): void
     require 'resources/views/'.$page. '.php';
     exit();
 }
+function assets($filename): string
+{
+    return $_ENV['API_URL'].'/public'.$filename;
+}
+
 #[NoReturn] function redirect(string $url): void
 {
     header("Location: $url");
